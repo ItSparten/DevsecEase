@@ -1,0 +1,48 @@
+sudo nano /etc/init.d/backendApp
+chmod +x /etc/init.d/backendApp
+sudo chmod +x /etc/init.d/backendApp
+sudo update-rc.d backendApp defaults
+sudo /etc/init.d/backendApp start
+sudo /etc/init.d/backendApp status
+
+
+backendApp :
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          myapp
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: My Java application
+# Description:       My Java application description
+### END INIT INFO
+
+
+# Change these settings to match your application
+APP_DIR=/home/ubuntu/
+APP_NAME=real-estate.jar
+APP_ARGS="-Xmx512m -Dspring.profiles.active=production"
+
+case "$1" in
+    start)
+        echo "Starting My Java Application"
+        cd $APP_DIR
+        nohup java -jar $APP_NAME > /dev/null 2>&1 &
+        ;;
+    stop)
+        echo "Stopping My Java Application"
+        pkill -f $APP_NAME
+        ;;
+    restart)
+        echo "Restarting My Java Application"
+        pkill -f $APP_NAME
+        cd $APP_DIR
+        nohup java -jar $APP_NAME > /dev/null 2>&1 &
+        ;;
+    *)
+        echo "Usage: /etc/init.d/backendApp {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
