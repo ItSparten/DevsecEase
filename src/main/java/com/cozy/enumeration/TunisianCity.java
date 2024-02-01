@@ -189,5 +189,4 @@ public enum TunisianCity {
     BENI_KHEDDACHE,
     EL_AROUSSA,
     SIDI_EL_HANI
-
 }
