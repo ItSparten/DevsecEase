@@ -1,5 +1,6 @@
 package com.cozy.entities;
 
+import com.cozy.enumeration.TunisianCity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.cozy.enumeration.PropertyStatus;
 import jakarta.persistence.*;
@@ -62,6 +63,9 @@ public class Property {
             inverseJoinColumns = @JoinColumn(name = "university_id")
     )
     private List<University> universities;
+
+    @Enumerated(EnumType.STRING)
+    private TunisianCity city;
 
 
 }
