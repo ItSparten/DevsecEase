@@ -7,6 +7,7 @@ import com.cozy.dto.response.CustomPageResponse;
 import com.cozy.dto.response.CustomPageable;
 import com.cozy.entities.*;
 import com.cozy.enumeration.PropertyStatus;
+import com.cozy.enumeration.TunisianCity;
 import com.cozy.exceptions.BadRequestException;
 import com.cozy.exceptions.ImageLimitExceededException;
 import com.cozy.exceptions.NotFoundException;
@@ -16,10 +17,12 @@ import com.cozy.repositories.PropertyRepository;
 import com.cozy.repositories.UniversityRepository;
 import com.cozy.services.PropertyService;
 import com.cozy.specifications.PropertySpecifications;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -123,6 +126,26 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public CustomPageResponse<Property> getPropertiesByStatusAndUniversity(PropertyStatus status, Long universityId, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Property> properties;
+        List<Property> filteredProperties = propertyRepository.findByStatus(status);
+        filteredProperties.removeIf(property -> !property.getUniversities().stream()
+                .anyMatch(university -> university.getId().equals(universityId)));
+        properties = new PageImpl<>(filteredProperties, pageRequest, filteredProperties.size());
+        return createCustomPageResponse(properties);
+    }
+
+    @Override
+    public CustomPageResponse<Property> getPropertiesByStatusAndCity(PropertyStatus status,TunisianCity cityFilter, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Property> properties=   propertyRepository.findByStatusAndCityOrderByIdDesc(status,cityFilter, pageRequest);
+        return createCustomPageResponse(properties);
+    }
+
+
+
+    @Override
     public Property assignPropertyToAgent(Long propertyId, Long agentId) {
         Property property = propertyRepository.findById(propertyId)
                 .orElseThrow(() -> new NotFoundException("Property not found with id: " + propertyId));
@@ -185,7 +208,6 @@ public class PropertyServiceImpl implements PropertyService {
     public CustomPageResponse<Property> filterProperties(PropertyFilterCrit filterCriteria, Pageable pageable) {
         Specification<Property> spec = buildPropertySpecification2(filterCriteria);
         Page<Property> filteredProperties = propertyRepository.findAll(spec, pageable);
-
         return createCustomPageResponse(filteredProperties);
     }
 
@@ -204,6 +226,9 @@ public class PropertyServiceImpl implements PropertyService {
     private Specification<Property> buildPropertySpecification2(PropertyFilterCrit filterCriteria) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+            // Add PUBLISHED status to all cases
+            predicates.add(PropertySpecifications.statusIs(PropertyStatus.PUBLISHED).toPredicate(root, query, criteriaBuilder));
+
 
             if (filterCriteria.getNbRooms() > 0 ) {
                 predicates.add(PropertySpecifications.roomsEqual(filterCriteria.getNbRooms()).toPredicate(root, query, criteriaBuilder));
@@ -221,7 +246,9 @@ public class PropertyServiceImpl implements PropertyService {
             if (filterCriteria.getUniversityId() != null) {
                 predicates.add(PropertySpecifications.universityIs(filterCriteria.getUniversityId()).toPredicate(root, query, criteriaBuilder));
             }
-
+            if (StringUtils.isNotBlank(filterCriteria.getCity())) {
+                predicates.add(PropertySpecifications.cityIsLike(filterCriteria.getCity()).toPredicate(root, query, criteriaBuilder));
+            }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/realestateDB
     username: root
-    password: GtaHesoyam123!
+    password:
   jpa:
     hibernate:
       ddl-auto: update

@@ -64,8 +64,7 @@ public class Property {
     )
     private List<University> universities;
 
-    @Enumerated(EnumType.STRING)
-    private TunisianCity city;
+    private String city;
 
 
 }

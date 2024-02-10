@@ -5,6 +5,7 @@ import com.cozy.dto.request.PropertyRequest;
 import com.cozy.dto.response.CustomPageResponse;
 import com.cozy.entities.Property;
 import com.cozy.enumeration.PropertyStatus;
+import com.cozy.enumeration.TunisianCity;
 import com.cozy.services.PropertyService;
 import com.cozy.services.impl.EmailService;
 import jakarta.mail.MessagingException;
@@ -53,6 +54,23 @@ public class PropertyController {
         return ResponseEntity.ok(properties);
     }
 
+ /*   @GetMapping("/by-status-and-city/{status}")
+    public ResponseEntity<CustomPageResponse<Property>> getPropertiesByStatus(
+            @PathVariable PropertyStatus status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) TunisianCity cityFilter) {
+        CustomPageResponse<Property> properties;
+        if (cityFilter != null) {
+            // Si cityFilter est fourni, utilisez-le pour filtrer les propriétés par ville
+            properties = propertyService.getPropertiesByStatusAndCity(status,cityFilter, page, size );
+        } else {
+            // Sinon, obtenez toutes les propriétés publiées sans filtre de ville
+            properties = propertyService.getPropertiesByStatus(status, page, size);
+        }
+        return ResponseEntity.ok(properties);
+    }*/
+
     @GetMapping("/by-status/{status}")
     public ResponseEntity<CustomPageResponse<Property>> getPropertiesByStatus(
             @PathVariable PropertyStatus status,
@@ -61,6 +79,16 @@ public class PropertyController {
         CustomPageResponse<Property> properties = propertyService.getPropertiesByStatus(status, page, size);
         return ResponseEntity.ok(properties);
     }
+    @GetMapping("/by-status-and-university/{status}/{universityId}")
+    public ResponseEntity<CustomPageResponse<Property>> getPropertiesByStatusAndUniversity(
+            @PathVariable PropertyStatus status,
+            @PathVariable(required = false) Long universityId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+            CustomPageResponse<Property> properties = propertyService.getPropertiesByStatusAndUniversity(status, universityId, page, size);
+            return ResponseEntity.ok(properties);
+    }
+
 
     @PostMapping("/{propertyId}/assign-agent/{agentId}")
     public ResponseEntity<Property> assignPropertyToAgent(@PathVariable Long propertyId, @PathVariable Long agentId) {

@@ -1,6 +1,8 @@
 package com.cozy.specifications;
 
 import com.cozy.entities.Property;
+import com.cozy.enumeration.PropertyStatus;
+import com.cozy.enumeration.TunisianCity;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
@@ -38,7 +40,6 @@ public class PropertySpecifications {
         };
     }
 
-
     public static Specification<Property> rentPriceGreaterThanOrEqual(double minRentPrice) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("rentPrice"), minRentPrice);
@@ -70,6 +71,15 @@ public class PropertySpecifications {
     public static Specification<Property> propertyTypeEqual(String propertyType) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("propertyType"), propertyType);
+    }
+    public static Specification<Property> cityIsLike(String city) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.like(root.get("city"), "%" + city + "%");
+    }
+
+    public static Specification<Property> statusIs(PropertyStatus status) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("status"), status);
     }
 
 }
