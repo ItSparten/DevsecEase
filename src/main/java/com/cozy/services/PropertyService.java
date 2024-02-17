@@ -19,6 +19,7 @@ public interface PropertyService {
     CustomPageResponse<Property> getPropertiesByStatus(PropertyStatus status, int page, int size);
     CustomPageResponse<Property> getPropertiesByStatusAndCity(PropertyStatus status, TunisianCity cityFilter, int page, int size);
     CustomPageResponse<Property> getPropertiesByStatusAndUniversity(PropertyStatus status, Long universityId, int page, int size);
+    CustomPageResponse<Property> getPropertiesByStatusAndCity(PropertyStatus status, String city, int page, int size);
     Property assignPropertyToAgent(Long propertyId, Long agentId);
     CustomPageResponse<Property> getPropertiesByAgent(Long agentId, int page, int size);
     Property assignPropertyToUniversities(Long propertyId, List<Long> universityIds);

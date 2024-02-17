@@ -23,6 +23,7 @@ public class SecurityConfiguration {
             "/newsletter/**",
             "/properties/by-status/**",
             "/properties/by-status-and-university/**",
+            "/properties/by-status-and-city/**",
             "/properties/latestPublished/**",
             "/properties/filter/**",
             "/properties/byid/**",

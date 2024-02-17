@@ -26,4 +26,5 @@ public interface PropertyRepository  extends JpaRepository<Property, Long>, JpaS
     List<Property> findTop5ByStatusOrderByIdDesc(PropertyStatus status);
 
     List<Property> findByStatus(PropertyStatus status);
+    Page<Property> findByStatusAndCityOrderByIdDesc(PropertyStatus status, String city, Pageable pageable);
 }

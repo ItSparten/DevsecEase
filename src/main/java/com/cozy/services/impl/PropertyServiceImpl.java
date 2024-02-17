@@ -137,6 +137,13 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public CustomPageResponse<Property> getPropertiesByStatusAndCity(PropertyStatus status, String city, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Property> properties= propertyRepository.findByStatusAndCityOrderByIdDesc(status, city, pageRequest);
+        return createCustomPageResponse(properties);
+    }
+
+    @Override
     public CustomPageResponse<Property> getPropertiesByStatusAndCity(PropertyStatus status,TunisianCity cityFilter, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Property> properties=   propertyRepository.findByStatusAndCityOrderByIdDesc(status,cityFilter, pageRequest);

@@ -88,6 +88,15 @@ public class PropertyController {
             CustomPageResponse<Property> properties = propertyService.getPropertiesByStatusAndUniversity(status, universityId, page, size);
             return ResponseEntity.ok(properties);
     }
+    @GetMapping("/by-status-and-city/{status}/{city}")
+    public ResponseEntity<CustomPageResponse<Property>> getPropertiesByStatusAndCity(
+            @PathVariable PropertyStatus status,
+            @PathVariable(required = false) String city,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        CustomPageResponse<Property> properties = propertyService.getPropertiesByStatusAndCity(status, city, page, size);
+        return ResponseEntity.ok(properties);
+    }
 
 
     @PostMapping("/{propertyId}/assign-agent/{agentId}")
