@@ -80,9 +80,9 @@ public class FakeDataCommandLineRunner implements CommandLineRunner {
 
     private void initHomeowner() {
         Homeowner homeowner1 = new Homeowner();
-        homeowner1.setFirstname("Mohamed");
-        homeowner1.setLastname("Ben Ali");
-        homeowner1.setEmail("homeowner1@gmail.com");
+        homeowner1.setFirstname("Bilel");
+        homeowner1.setLastname("Oueslati");
+        homeowner1.setEmail("oueslatibilel55@gmail.com ");
         homeowner1.setPassword(passwordEncoder.encode("password"));
         homeowner1.setRole(Role.HOMEOWNER);
         homeowner1.setActive(true);
@@ -90,21 +90,7 @@ public class FakeDataCommandLineRunner implements CommandLineRunner {
         homeowner1.setAge(30);
         homeowner1.setNationalIdentityCard("12345678");
 
-
-        Homeowner homeowner2 = new Homeowner();
-        homeowner2.setFirstname("Fatima");
-        homeowner2.setLastname("Ben Hmida");
-        homeowner2.setEmail("homeowner2@gmail.com");
-        homeowner2.setPassword(passwordEncoder.encode("password"));
-        homeowner2.setRole(Role.HOMEOWNER);
-        homeowner2.setActive(true);
-        homeowner2.setPhoneNumber("1234567890");
-        homeowner2.setAge(30);
-        homeowner2.setNationalIdentityCard("12345678");
-
-
         homeownerRepository.save(homeowner1);
-        homeownerRepository.save(homeowner2);
     }
     private void initAgent() {
         Agent agent1 = new Agent();
@@ -116,43 +102,20 @@ public class FakeDataCommandLineRunner implements CommandLineRunner {
         agent1.setActive(true);
         agent1.setPhoneNumber("1234567890");
 
-        Agent agent2 = new Agent();
-        agent2.setFirstname("Amira");
-        agent2.setLastname("Khelifi");
-        agent2.setEmail("agent2@gmail.com");
-        agent2.setPassword(passwordEncoder.encode("password"));
-        agent2.setRole(Role.AGENT);
-        agent2.setActive(true);
-        agent2.setPhoneNumber("1234567890");
-
-
         agentRepository.save(agent1);
-        agentRepository.save(agent2);
+
     }
     private void initStudent() {
         Student student1 = new Student();
-        student1.setFirstname("Lamia");
-        student1.setLastname("Haddad");
-        student1.setEmail("student1@gmail.com");
+        student1.setFirstname("Bassem");
+        student1.setLastname("Raouafi");
+        student1.setEmail("bassamraouafi@gmail.com");
         student1.setPassword(passwordEncoder.encode("password"));
         student1.setRole(Role.STUDENT);
         student1.setActive(true);
         student1.setUniversityName("ULT");
         student1.setPhoneNumber("1234567890");
-
-        Student student2 = new Student();
-        student2.setFirstname("Youssef");
-        student2.setLastname("Mabrouk");
-        student2.setEmail("student2@gmail.com");
-        student2.setPassword(passwordEncoder.encode("password"));
-        student2.setRole(Role.STUDENT);
-        student2.setActive(true);
-        student2.setUniversityName("ESPRIT");
-        student2.setPhoneNumber("1234567890");
-
         studentRepository.save(student1);
-        studentRepository.save(student2);
-
 
     }
 }
