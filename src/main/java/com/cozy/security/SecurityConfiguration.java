@@ -20,6 +20,7 @@ public class SecurityConfiguration {
             "/auth/**",
             "/email/**",
             "/contact/**",
+            "/password/**",
             "/newsletter/**",
             "/properties/by-status/**",
             "/properties/by-status-and-university/**",
