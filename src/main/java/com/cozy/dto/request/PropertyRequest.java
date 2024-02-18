@@ -25,4 +25,5 @@ public class PropertyRequest {
     private double rentPrice;
     private String description;
     private Long homeownerId;
+    private String city;
 }

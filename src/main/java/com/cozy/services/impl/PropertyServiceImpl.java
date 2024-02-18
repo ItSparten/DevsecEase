@@ -72,6 +72,7 @@ public class PropertyServiceImpl implements PropertyService {
         property.setSecurityDeposit(propertyRequest.getSecurityDeposit());
         property.setRentPrice(propertyRequest.getRentPrice());
         property.setDescription(propertyRequest.getDescription());
+        property.setCity(propertyRequest.getCity());
         property.setStatus(PropertyStatus.PENDING_VALIDATION);
 
 
