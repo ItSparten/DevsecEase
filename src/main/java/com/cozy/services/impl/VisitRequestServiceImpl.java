@@ -124,6 +124,7 @@ public class VisitRequestServiceImpl implements VisitRequestService {
         response.setPhone(visitRequest.getPhone());
         response.setStatus(visitRequest.getStatus());
         response.setMessage(visitRequest.getMessage());
+        response.setId(visitRequest.getId());
         return response;
     }
 }

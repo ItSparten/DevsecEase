@@ -21,4 +21,5 @@ public class VisitRequestResponse {
     private LocalDate visitDate;
     private  VisitRequestStatus status;
     private  String message;
+    private Long id;
 }
