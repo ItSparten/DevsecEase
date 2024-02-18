@@ -123,6 +123,7 @@ public class VisitRequestServiceImpl implements VisitRequestService {
         response.setVisitDate(visitRequest.getVisitDate());
         response.setPhone(visitRequest.getPhone());
         response.setStatus(visitRequest.getStatus());
+        response.setMessage(visitRequest.getMessage());
         return response;
     }
 }

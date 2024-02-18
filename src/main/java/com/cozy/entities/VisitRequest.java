@@ -32,4 +32,7 @@ public class VisitRequest {
 
     @Enumerated(EnumType.STRING)
     private VisitRequestStatus status;
+
+    private String message;
+
 }

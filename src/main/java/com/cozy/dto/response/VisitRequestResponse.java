@@ -20,4 +20,5 @@ public class VisitRequestResponse {
     private Property property;
     private LocalDate visitDate;
     private  VisitRequestStatus status;
+    private  String message;
 }
