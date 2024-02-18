@@ -82,7 +82,7 @@ public class FakeDataCommandLineRunner implements CommandLineRunner {
         Homeowner homeowner1 = new Homeowner();
         homeowner1.setFirstname("Bilel");
         homeowner1.setLastname("Oueslati");
-        homeowner1.setEmail("oueslatibilel55@gmail.com ");
+        homeowner1.setEmail("oueslatibilel55@gmail.com");
         homeowner1.setPassword(passwordEncoder.encode("password"));
         homeowner1.setRole(Role.HOMEOWNER);
         homeowner1.setActive(true);
