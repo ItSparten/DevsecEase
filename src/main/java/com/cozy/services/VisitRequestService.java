@@ -8,7 +8,7 @@ import com.cozy.enumeration.VisitRequestStatus;
 import java.time.LocalDate;
 
 public interface VisitRequestService {
-    VisitRequest createVisitRequest(Long studentId, Long propertyId, LocalDate visitDate,   String phone);
+    VisitRequest createVisitRequest(Long studentId, Long propertyId, LocalDate visitDate,   String phone, String message);
     CustomPageResponse<VisitRequestResponse> getAllVisitRequestsByStudent(Long studentId, int page, int size);
     CustomPageResponse<VisitRequestResponse> getAllVisitRequests( int page, int size);
 

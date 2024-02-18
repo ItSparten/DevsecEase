@@ -31,7 +31,7 @@ public class VisitRequestServiceImpl implements VisitRequestService {
     private final PropertyRepository propertyRepository;
 
     @Override
-    public VisitRequest createVisitRequest(Long studentId, Long propertyId, LocalDate visitDate,  String phone) {
+    public VisitRequest createVisitRequest(Long studentId, Long propertyId, LocalDate visitDate,  String phone, String message) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new NotFoundException("Student not found with id: " + studentId));
 
@@ -48,6 +48,7 @@ public class VisitRequestServiceImpl implements VisitRequestService {
         visitRequest.setVisitDate(visitDate);
         visitRequest.setPhone(phone);
         visitRequest.setStatus(VisitRequestStatus.INPROGRESS);
+        visitRequest.setMessage(message);
         return visitRequestRepository.save(visitRequest);
     }
 

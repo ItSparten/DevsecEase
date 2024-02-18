@@ -15,4 +15,5 @@ public class VisitRequestCreateRequest {
     private String phone;
     private Long propertyId;
     private LocalDate visitDate;
+    private String  message;
 }

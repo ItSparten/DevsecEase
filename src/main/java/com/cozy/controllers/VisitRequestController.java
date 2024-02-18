@@ -23,7 +23,7 @@ public class VisitRequestController {
 
     @PostMapping("/create")
     public ResponseEntity<SuccessMessageResponse> createVisitRequest(@RequestBody VisitRequestCreateRequest request) {
-        visitRequestService.createVisitRequest(request.getStudentId(), request.getPropertyId(), request.getVisitDate(), request.getPhone());
+        visitRequestService.createVisitRequest(request.getStudentId(), request.getPropertyId(), request.getVisitDate(), request.getPhone(), request.getMessage());
         return ResponseEntity.ok(new SuccessMessageResponse("Visit request created successfully."));
     }
 
