@@ -1,7 +1,15 @@
 server:
-  port: 8095
   servlet:
     context-path: /api/v1
+    # Configuration HTTPS
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: bassem@123
+    key-alias: myalias
+    key-store-type: PKCS12
+  port: 8095
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/realestateDB
@@ -36,7 +44,7 @@ application:
       expiration: 31536000000 # 1 an en millisecondes
   image:
 
-    remoteUrl: http://37.187.181.122:8095/api/v1/images/
+    remoteUrl: https://cosy.tn:8095/api/v1/images/
     localUrl: http://127.0.0.1:8095/api/v1/images/
     path:
       local: file:C:/images/
