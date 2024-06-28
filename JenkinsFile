@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+    		DOCKERHUB_CREDENTIALS=credentials('dock')
+    	}
+
+    stages {
+        stage('Récupération du code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Lancement de la commande Maven') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage('SonarQube Scan') {
+            steps { 
+                   script {
+                    sh 'chmod +x ./mvnw'
+                  }
+                   withSonarQubeEnv(installationName: 'sonar') {
+                sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:2.17.2:sonar'
+            }
+        }
+        }
+     
+       stage('mvn deploy'){
+            steps {
+                sh "mvn deploy"
+            }
+       }
+               
+
+        
+
+}
+}
