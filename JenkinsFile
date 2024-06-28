@@ -23,7 +23,7 @@ pipeline {
                     sh 'chmod +x ./mvnw'
                   }
                    withSonarQubeEnv(installationName: 'sonar') {
-                sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:2.17.2:sonar'
+                sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
             }
         }
         }
