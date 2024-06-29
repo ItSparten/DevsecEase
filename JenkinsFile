@@ -17,7 +17,7 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
-        stage(sonar cube') {
+        stage('sonar cube') {
             steps {
                 script {
                     sh 'chmod +x ./mvnw'
