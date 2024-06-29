@@ -15,18 +15,15 @@ pipeline {
         stage('Lancement de la commande Maven') {
             steps {
                 sh 'mvn clean compile'
-            }
-        }
-        stage('SonarQube Scan') {
-            steps { 
-                   script {
+                script {
                     sh 'chmod +x ./mvnw'
-                  }
-                   withSonarQubeEnv(installationName: 'sonar') {
+                }
+                withSonarQubeEnv(installationName: 'sonar') {
                 sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
+                }
             }
         }
-        }
+        
      
        stage('mvn deploy'){
             steps {
