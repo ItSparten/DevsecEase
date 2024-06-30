@@ -12,17 +12,35 @@ pipeline {
             }
         }
 
-        stage('Lancement de la commande Maven') {
-            steps { 
-              
-                sh 'mvn clean compile'
+        stage('remove old release') {
+            steps {               
+                sh 'mvn clean'
             }
         }
-       
-     
-       stage('mvn deploy'){
+
+        stage('compiling') {
+            steps {               
+                sh 'mvn compile'
+            }
+        }
+
+        stage('Unit testing') {
+            steps {               
+                sh 'mvn test'
+            }
+        }
+
+        stage('code quality test') {
+            steps {                
+                withSonarQubeEnv(installationName: 'sonar') {
+                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
+                }
+            }
+        }
+            
+       stage('deployment on nexus'){
             steps {
-                sh "mvn deploy"
+                sh "mvn deploy -Dmaven.test.skip=true"
             }
        }
                
