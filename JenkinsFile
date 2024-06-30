@@ -21,7 +21,7 @@ pipeline {
         stage('sonar cube') {
             steps {
                   script {
-                    sh 'chmod +x 947d6cb1c423'
+                    sh 'chmod +x ./mvnw'
                 }
                 
                 withSonarQubeEnv(installationName: 'sonar') {
