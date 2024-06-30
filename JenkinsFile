@@ -13,12 +13,16 @@ pipeline {
         }
 
         stage('Lancement de la commande Maven') {
-            steps {
+            steps { 
+              
                 sh 'mvn clean compile'
             }
         }
         stage('sonar cube') {
             steps {
+                  script {
+                    sh 'chmod +x 947d6cb1c423'
+                }
                 
                 withSonarQubeEnv(installationName: 'sonar') {
                     sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
