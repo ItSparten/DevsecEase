@@ -27,7 +27,12 @@ pipeline {
        
 stage(' NETWORK Scan ') {
             steps {
-        sh 'nmap  192.168.33.10 > /home/vagrant/scan_results.txt1  '
+        sh 'nmap  192.168.33.10 > /home/vagrant/scan_results.txt1 '
+    }
+       }
+stage('  Nikto Scan ') {
+            steps {
+        sh 'nikto -h 192.168.33.10 -p 8080 > niktotests.txt1'
     }
        }
                
