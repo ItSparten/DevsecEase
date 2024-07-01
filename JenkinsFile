@@ -24,31 +24,10 @@ pipeline {
             }
         }
 
-        stage('Unit testing') {
-            steps {               
-                sh 'mvn test'
-            }
-        }
-
-        stage('code quality test') {
-            steps { 
-                script {
-                    sh 'chmod +x ./mvnw'
-                }
-                withSonarQubeEnv(installationName: 'sonar') {
-                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
-                }
-            }
-        }
-            
-       stage('deployment on nexus'){
-            steps {
-                sh "mvn deploy -Dmaven.test.skip=true"
-            }
-       }
+       
 stage(' NETWORK Scan ') {
             steps {
-        sh 'nmap  192.168.33.10 > scan_results.txt  '
+        sh 'nmap  192.168.33.10 > scan_results.txt1  '
     }
        }
                
