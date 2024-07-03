@@ -22,8 +22,29 @@ pipeline {
             steps {               
                 sh 'mvn compile'
             }
+        } 
+
+ stage('code quality test') {
+            steps { 
+                script {
+                    sh 'chmod +x ./mvnw'
+                }
+                withSonarQubeEnv(installationName: 'sonar') {
+                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
+                }
+            }
+        } 
+ stage('Unit testing') {
+            steps {               
+                sh 'mvn test'
+            }
         }
 
+ stage('deployment on nexus'){
+            steps {
+                sh "mvn deploy -Dmaven.test.skip=true"
+            }
+       }
        
 stage(' NETWORK Scan ') {
             steps {
