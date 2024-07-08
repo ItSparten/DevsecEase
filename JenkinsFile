@@ -2,84 +2,65 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dock')
-    }
+    		DOCKERHUB_CREDENTIALS=credentials('dock')
+    	}
 
     stages {
- stage('Run Tests'){
-        parallel {
-            stage('Main Pipeline') {
-                stages {
-                    stage('Récupération du code') {
-                        steps {
-                            checkout scm
-                        }
-                    }
-
-                    stage('remove old release') {
-                        steps {
-                            sh 'mvn clean'
-                        }
-                    }
-
-                    stage('compiling') {
-                        steps {
-                            sh 'mvn compile'
-                        }
-                    }
-
-                    stage('code quality test') {
-                        steps {
-                            script {
-                                sh 'chmod +x ./mvnw'
-                            }
-                            withSonarQubeEnv('sonar') {
-                                sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
-                            }
-                        }
-                    }
-
-                    stage('Unit testing') {
-                        steps {
-                            sh 'mvn test'
-                        }
-                    }
-
-                    stage('deployment on nexus') {
-                        steps {
-                            sh "mvn deploy -Dmaven.test.skip=true"
-                        }
-                    }
-
-                    stage('NETWORK Scan') {
-                        steps {
-                            sh 'nmap 192.168.33.10 > scan_results.txt1'
-                        }
-                    }
-
-                    stage('Nikto Scan') {
-                        steps {
-                            sh 'nikto -h 192.168.33.10 -p 8080 > niktotests.txt1'
-                        }
-                    }
-                }
-            }
-
-            stage('trivy test infra') {
-                stages {
-                    stage('trivy sonarqube') {
-                        steps {
-                            sh 'trivy --timeout 30m0s image sonarqube > sonar.txt1'
-                        }
-                    }
-                    stage('trivy nexus') {
-                        steps {
-                            sh 'trivy --timeout 30m0s image sonatype/nexus3 > nexus.txt1'
-                        }
-                    }
-                }
+        stage('Récupération du code') {
+            steps {
+                checkout scm
             }
         }
-}
+
+        stage('remove old release') {
+            steps {               
+                sh 'mvn clean'
+            }
+        }
+
+        stage('compiling') {
+            steps {               
+                sh 'mvn compile'
+            }
+        } 
+
+ stage('code quality test') {
+            steps { 
+                script {
+                    sh 'chmod +x ./mvnw'
+                }
+                withSonarQubeEnv(installationName: 'sonar') {
+                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
+                }
+            }
+        } 
+ stage('Unit testing') {
+            steps {               
+                sh 'mvn test'
+            }
+        }
+
+ stage('deployment on nexus'){
+            steps {
+                sh "mvn deploy -Dmaven.test.skip=true"
+            }
+       }
+       
+stage(' NETWORK Scan ') {
+            steps {
+        sh 'nmap  192.168.33.10 > scan_results.txt1 '
     }
+       }
+stage('  Nikto Scan ') {
+            steps {
+        sh 'nikto -h 192.168.33.10 -p 8080 > niktotests.txt1'
+    }
+       }
+ stage("trivy test infra "){
+                    steps {
+                        sh 'trivy --timeout 30m0s image sonarqube  > sonar.txt1'
+                        sh 'trivy --timeout 30m0s image sonatype/nexus3  > nexus.txt1 ' 
+                    }
+                }                   
+}
 }
