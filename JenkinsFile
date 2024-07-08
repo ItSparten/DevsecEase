@@ -64,7 +64,7 @@ stage('  Nikto Scan ') {
                 }  
 stage('Grafana Dashboard') {
             steps {
-                sh 'docker start c04bf2e6cb56'
+                sh 'sudo docker start c04bf2e6cb56'
                 
             }
 
