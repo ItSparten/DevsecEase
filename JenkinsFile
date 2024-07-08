@@ -6,25 +6,25 @@ pipeline {
     	}
 
     stages {
-        stage('Récupération du code') {
+        stage('Code Recuperation') {
             steps {
                 checkout scm
             }
         }
 
-        stage('remove old release') {
+        stage('Remove old release') {
             steps {               
                 sh 'mvn clean'
             }
         }
 
-        stage('compiling') {
+        stage('Compiling') {
             steps {               
                 sh 'mvn compile'
             }
         } 
 
- stage('code quality test') {
+ stage('Code quality test') {
             steps { 
                 script {
                     sh 'chmod +x ./mvnw'
@@ -40,7 +40,7 @@ pipeline {
             }
         }
 
- stage('deployment on nexus'){
+ stage('Deployment on nexus'){
             steps {
                 sh "mvn deploy -Dmaven.test.skip=true"
             }
@@ -56,11 +56,18 @@ stage('  Nikto Scan ') {
         sh 'nikto -h 192.168.33.10 -p 8080 > niktotests.txt1'
     }
        }
- stage("trivy test infra "){
+ stage("Trivy test infra "){
                     steps {
                         sh 'trivy --timeout 30m0s image sonarqube  > sonar.txt1'
                         sh 'trivy --timeout 30m0s image sonatype/nexus3  > nexus.txt1 ' 
                     }
-                }                   
+                }  
+stage('Grafana Dashboard') {
+            steps {
+                sh 'docker start c04bf26cb56'
+                
+            }
+
+        } 
 }
 }
