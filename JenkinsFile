@@ -58,8 +58,8 @@ stage('  Nikto Scan ') {
        }
  stage("trivy test infra "){
                     steps {
-                        sh 'trivy image sonarqube  > sonar.txt1'
-                        sh 'trivy image sonatype/nexus3  > nexus.txt1 '
+                        sh 'trivy --timeout 30m0s image sonarqube  > sonar.txt1'
+                        sh 'trivy --timeout 30m0s image sonatype/nexus3  > nexus.txt1 '
                          
                     }
                 }
