@@ -29,7 +29,7 @@ pipeline {
                 script {
                     sh 'chmod +x ./mvnw'
                 }
-                withSonarQubeEnv(installationName: 'SonarQube Scanner') {
+                withSonarQubeEnv(installationName: 'sonar') {
                     sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
                 }
             }
